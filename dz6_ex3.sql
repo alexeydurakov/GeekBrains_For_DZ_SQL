@@ -6,5 +6,5 @@ DESC profiles ;
 DESC likes ;
 
 SELECT COUNT(*) AS count, gender FROM likes, profiles
-WHERE likes.user_id = profiles.user_id
+WHERE likes.target_id = profiles.user_id
 GROUP BY gender;
