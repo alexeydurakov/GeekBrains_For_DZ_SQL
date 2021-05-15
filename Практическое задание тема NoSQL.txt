@@ -1,0 +1,41 @@
+
+-- 1. В базе данных Redis подберите коллекцию для подсчета посещений с определенных IP-адресов.
+HINCRBY addresses '127.0.0.1' 1
+HGETALL addresses
+
+HINCRBY addresses '127.0.0.2' 1
+HGETALL addresses
+
+
+-- 2. При помощи базы данных Redis решите задачу поиска имени пользователя по электронному
+-- адресу и наоборот, поиск электронного адреса пользователя по его имени.
+HSET emails 'alexey' 'alexey.durakov@gmail.com'
+HGET emails 'alexey'
+
+HSET users 'alexey.durakov@gmail.com' 'alexey'
+HGET users 'alexey.durakov@gmail.com'
+
+-- 3. Организуйте хранение категорий и товарных позиций учебной базы данных shop в СУБД MongoDB.
+-- Предлагаемый вариант
+
+show dbs
+
+use shop
+
+db.createCollection('catalogs')
+db.createCollection('products')
+
+use catalogs
+db.catalogs.insertMany([{"name": "Брюки"}, {"name": "Рубашки"}, {"name": "Куртки"}])
+
+use products
+db.products.insert({"name": "Джинсы", "description": "Джинсы Stilmen черного цвета", "price": "1900.00", "catalog_id": "Брюки", "created_at": new Date(), "updated_at": new Date()}) 
+db.products.insert({"name": "Поло", "description": "Рубашка- поло цвета хаки с воротником из 100% хлопка", "price": "1800.00", "catalog_id": "Рубашки", "created_at": new Date(), "updated_at": new Date()}) 
+db.products.insert({"name": "Спортивная куртка", "description": "Толстовка-бомбер джинсовая", "price": "4500.00", "catalog_id": "Куртки", "created_at": new Date(), "updated_at": new Date()}) 
+
+
+db.products.find().pretty()
+db.products.find({name: "Спортивная куртка"}).pretty()
+
+
+
